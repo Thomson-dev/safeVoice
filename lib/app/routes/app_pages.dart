@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:safe_voice/app/routes/role_selection_screen.dart';
+import 'package:safe_voice/features/auth/screens/sign_in_screen.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/report_controller.dart';
 import '../controllers/trusted_contact_controller.dart';
@@ -9,21 +10,33 @@ import '../../features/student/screens/emergency_alert_screen.dart';
 import '../../features/student/screens/track_report_screen.dart';
 import '../../features/student/screens/trusted_contacts_screen.dart';
 import '../../features/student/screens/resources_hub_screen.dart';
+import '../../features/student/screens/settings_screen.dart';
 import '../../features/counselor/screens/counselor_home_screen.dart';
 import '../../features/counselor/screens/report_detail_screen.dart';
+import '../../features/splash/screens/splash_screen.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = AppRoutes.ROLE_SELECTION;
+  static const INITIAL = AppRoutes.SPLASH;
 
   static final routes = [
+    GetPage(
+      name: AppRoutes.SPLASH,
+      page: () => const SplashScreen(),
+      transition: Transition.fade,
+    ),
     GetPage(
       name: AppRoutes.ROLE_SELECTION,
       page: () => const RoleSelectionScreen(),
       transition: Transition.fade,
+    ),
+    GetPage(
+      name: AppRoutes.SIGN_IN,
+      page: () => const SignInScreen(),
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.STUDENT_HOME,
@@ -61,6 +74,12 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
     GetPage(
+      name: AppRoutes.SETTINGS,
+      page: () => const SettingsScreen(),
+      binding: SettingsBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
       name: AppRoutes.COUNSELOR_HOME,
       page: () => const CounselorHomeScreen(),
       binding: CounselorBinding(),
@@ -79,50 +98,57 @@ class AppPages {
 class StudentBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ReportController());
-    Get.put(TrustedContactController());
+    Get.lazyPut<ReportController>(() => ReportController());
+    Get.lazyPut<TrustedContactController>(() => TrustedContactController());
   }
 }
 
 class ReportBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ReportController());
+    Get.lazyPut<ReportController>(() => ReportController());
   }
 }
 
 class EmergencyBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ReportController());
-    Get.put(TrustedContactController());
+    Get.lazyPut<ReportController>(() => ReportController());
+    Get.lazyPut<TrustedContactController>(() => TrustedContactController());
   }
 }
 
 class TrackingBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ReportController());
+    Get.lazyPut<ReportController>(() => ReportController());
   }
 }
 
 class ContactsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(TrustedContactController());
+    Get.lazyPut<TrustedContactController>(() => TrustedContactController());
   }
 }
 
 class CounselorBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ReportController());
+    Get.lazyPut<ReportController>(() => ReportController());
   }
 }
 
 class ReportDetailBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ReportController());
+    Get.lazyPut<ReportController>(() => ReportController());
+  }
+}
+
+class SettingsBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AuthController>(() => AuthController());
   }
 }

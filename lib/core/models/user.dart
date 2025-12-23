@@ -10,6 +10,8 @@ class User {
   // Counselor-specific fields
   final String? fullName; // Required for counselors
   final String? licenseNumber; // Professional license
+  final String? schoolName; // School/Institution name
+  final String? department; // Department (e.g., Mental Health)
   final bool? isVerified; // Counselor verification status
   
   final String? avatar;
@@ -24,6 +26,8 @@ class User {
     this.displayName,
     this.fullName,
     this.licenseNumber,
+    this.schoolName,
+    this.department,
     this.isVerified,
     this.avatar,
     this.createdAt,
@@ -39,6 +43,8 @@ class User {
       'displayName': displayName,
       'fullName': fullName,
       'licenseNumber': licenseNumber,
+      'schoolName': schoolName,
+      'department': department,
       'isVerified': isVerified,
       'avatar': avatar,
       'createdAt': createdAt?.toIso8601String(),
@@ -55,6 +61,8 @@ class User {
       displayName: json['displayName'],
       fullName: json['fullName'],
       licenseNumber: json['licenseNumber'],
+      schoolName: json['schoolName'],
+      department: json['department'],
       isVerified: json['isVerified'],
       avatar: json['avatar'],
       createdAt: json['createdAt'] != null 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "943695418482",
+    "project_id": "safevoice-85790",
+    "storage_bucket": "safevoice-85790.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943695418482:android:0ff23a5ff272f3d6359eeb",
+        "android_client_info": {
+          "package_name": "com.example.safe_voice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTktZx6UIMoqL8Wi9nFohnanuR3Cp7zzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

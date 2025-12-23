@@ -17,10 +17,13 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # State management
-  get: ^4.7.3
+  get: ^4.6.6
 
   # API calls
   dio: ^5.9.0
+
+  # HTTP parser for multipart uploads
+  http_parser: ^4.0.2
 
   # Local storage
   shared_preferences: ^2.5.4
@@ -46,6 +49,16 @@ dependencies:
 
   # Contacts picker
   flutter_contacts: ^1.1.7
+
+  # Firebase
+  firebase_core: ^3.8.1
+  firebase_auth: ^5.3.4
+  cloud_firestore: ^5.5.2
+  firebase_storage: ^12.3.8
+  firebase_messaging: ^15.2.10
+  flutter_local_notifications: ^19.5.0
+  geocoding: ^4.0.0
+  
 
 dev_dependencies:
   flutter_test:

@@ -1,18 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'app/routes/app_pages.dart';
-import 'core/services/local_storage_service.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize GetStorage
-  await GetStorage.init();
-  
-  // Initialize LocalStorageService
-  await LocalStorageService().init();
-  
+
+  // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
@@ -26,10 +24,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        useMaterial3: true
       ),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      builder: (context, child) {
+        // Ensure the overlay is properly initialized
+        return child ?? const SizedBox.shrink();
+      },
     );
   }
 }

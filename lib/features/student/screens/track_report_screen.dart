@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app/controllers/report_controller.dart';
 import '../../../core/utils/urgency_classifier.dart';
+import 'chat_with_counselor_screen.dart';
 
 class TrackReportScreen extends StatefulWidget {
   const TrackReportScreen({Key? key}) : super(key: key);
@@ -39,13 +40,10 @@ class _TrackReportScreenState extends State<TrackReportScreen>
       appBar: AppBar(
         title: const Text(
           'Track Report',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
         ),
         centerTitle: true,
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: const Color(0xFF4A5AAF),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 20),
@@ -61,10 +59,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Colors.blue.shade700,
-                  Colors.grey.shade50,
-                ],
+                colors: [const Color(0xFF4A5AAF), Colors.grey.shade50],
               ),
             ),
           ),
@@ -136,10 +131,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
                     SizedBox(height: 4),
                     Text(
                       'Enter your tracking code to check status',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 13, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -151,11 +143,8 @@ class _TrackReportScreenState extends State<TrackReportScreen>
             controller: trackingCodeController,
             textCapitalization: TextCapitalization.characters,
             decoration: InputDecoration(
-              hintText: 'ABC123DEF',
-              hintStyle: TextStyle(
-                color: Colors.grey.shade400,
-                fontSize: 15,
-              ),
+              hintText: 'TRACK-ABC123DEF',
+              hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 15),
               prefixIcon: Icon(
                 Icons.tag,
                 color: Colors.grey.shade600,
@@ -205,7 +194,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
               child: ElevatedButton(
                 onPressed: isSearching.value ? null : _searchReport,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue.shade700,
+                  backgroundColor: const Color(0xFF4A5AAF),
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -219,8 +208,9 @@ class _TrackReportScreenState extends State<TrackReportScreen>
                         width: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       )
                     : const Row(
@@ -302,11 +292,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
       ),
       child: Column(
         children: [
-          Icon(
-            statusInfo['icon'] as IconData,
-            color: Colors.white,
-            size: 48,
-          ),
+          Icon(statusInfo['icon'] as IconData, color: Colors.white, size: 48),
           const SizedBox(height: 12),
           Text(
             statusInfo['label'] as String,
@@ -320,10 +306,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
           Text(
             statusInfo['message'] as String,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
           ),
         ],
       ),
@@ -439,7 +422,8 @@ class _TrackReportScreenState extends State<TrackReportScreen>
           _buildTimelineItem(
             'Under Review',
             'In progress',
-            isCompleted: report['status'] == 'under_review' ||
+            isCompleted:
+                report['status'] == 'under_review' ||
                 report['status'] == 'resolved' ||
                 report['status'] == 'escalated',
           ),
@@ -469,18 +453,19 @@ class _TrackReportScreenState extends State<TrackReportScreen>
               Container(
                 width: 2,
                 height: 20,
-                color: isCompleted ? Colors.blue.shade700 : Colors.grey.shade300,
+                color: isCompleted
+                    ? Colors.blue.shade700
+                    : Colors.grey.shade300,
               ),
             Container(
               width: 24,
               height: 24,
               decoration: BoxDecoration(
-                color: isCompleted ? Colors.blue.shade700 : Colors.grey.shade300,
+                color: isCompleted
+                    ? Colors.blue.shade700
+                    : Colors.grey.shade300,
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white,
-                  width: 3,
-                ),
+                border: Border.all(color: Colors.white, width: 3),
                 boxShadow: [
                   BoxShadow(
                     color: isCompleted
@@ -492,18 +477,16 @@ class _TrackReportScreenState extends State<TrackReportScreen>
                 ],
               ),
               child: isCompleted
-                  ? const Icon(
-                      Icons.check,
-                      size: 14,
-                      color: Colors.white,
-                    )
+                  ? const Icon(Icons.check, size: 14, color: Colors.white)
                   : null,
             ),
             if (!isLast)
               Container(
                 width: 2,
                 height: 20,
-                color: isCompleted ? Colors.blue.shade700 : Colors.grey.shade300,
+                color: isCompleted
+                    ? Colors.blue.shade700
+                    : Colors.grey.shade300,
               ),
           ],
         ),
@@ -525,10 +508,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -575,25 +555,51 @@ class _TrackReportScreenState extends State<TrackReportScreen>
             decoration: BoxDecoration(
               color: Colors.blue.shade50,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Colors.blue.shade100,
-              ),
+              border: Border.all(color: Colors.blue.shade100),
             ),
-            child: Row(
+            child: Column(
               children: [
-                Icon(
-                  Icons.info_outline,
-                  color: Colors.blue.shade700,
-                  size: 20,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.chat_bubble_outline,
+                      color: Colors.blue.shade700,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Text(
+                        'Chat with your assigned counselor for updates and support.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black87,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Text(
-                    'No messages yet. A counselor will contact you soon with updates.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
-                      height: 1.4,
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _openChat(report),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF4A5AAF),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      elevation: 0,
+                    ),
+                    icon: const Icon(Icons.chat, size: 18),
+                    label: const Text(
+                      'Open Chat',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -623,10 +629,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
               ),
               const SizedBox(height: 4),
               valueWidget ??
@@ -735,7 +738,7 @@ class _TrackReportScreenState extends State<TrackReportScreen>
   }
 
   void _searchReport() async {
-    final code = trackingCodeController.text.trim();
+    final code = trackingCodeController.text.trim().toUpperCase();
     if (code.isEmpty) {
       Get.snackbar(
         'Error',
@@ -750,35 +753,142 @@ class _TrackReportScreenState extends State<TrackReportScreen>
       return;
     }
 
-    // Simulate API call
-    isSearching.value = true;
-    await Future.delayed(const Duration(milliseconds: 800));
+    // Validate tracking code format (TRACK-XXXXXXXX)
+    if (!code.startsWith('TRACK-') || code.length < 12) {
+      Get.snackbar(
+        'Invalid Format',
+        'Tracking code should be in format: TRACK-XXXXXXXX',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange.shade100,
+        colorText: Colors.orange.shade900,
+        icon: const Icon(Icons.info_outline, color: Colors.orange),
+        margin: const EdgeInsets.all(16),
+        borderRadius: 12,
+        duration: const Duration(seconds: 3),
+      );
+      return;
+    }
 
-    // Hardcoded test report for now
-    foundReport.value = {
-      'trackingCode': code,
-      'incidentType': 'Online Harassment',
-      'description': 'Test incident report with sample data',
-      'location': 'Campus Library, 3rd Floor',
-      'urgencyLevel': 'high',
-      'status': 'under_review',
-      'submittedAt': DateTime.now().subtract(const Duration(days: 2)),
-    };
+    try {
+      isSearching.value = true;
+      foundReport.value = null;
 
-    isSearching.value = false;
-    _animationController.forward(from: 0);
+      // Fetch report from API
+      final result = await reportController.reportService
+          .getReportByTrackingCode(code);
 
-    Get.snackbar(
-      'Success',
-      'Report found successfully',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.green.shade100,
-      colorText: Colors.green.shade900,
-      icon: const Icon(Icons.check_circle, color: Colors.green),
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
-      duration: const Duration(seconds: 2),
-    );
+      if (result != null &&
+          result['success'] == true &&
+          result['report'] != null) {
+        final reportData = result['report'] as Map<String, dynamic>;
+
+        // Convert API response to display format
+
+        final extractedId = reportData['id'] ?? reportData['_id'];
+        print('DEBUG: Extracted ID for chat: $extractedId');
+
+        foundReport.value = {
+          '_id': extractedId, // MongoDB ID for chat
+          'reportId': extractedId, // Backup key
+          'trackingCode': reportData['trackingCode'] ?? code,
+          'incidentType': reportData['incidentType'] ?? 'Unknown',
+          'description':
+              reportData['description'] ?? 'No description available',
+          'location': reportData['schoolName'] ?? 'Not specified',
+          'urgencyLevel': _mapStatusToUrgency(reportData['status']),
+          'status': reportData['status'] ?? 'pending',
+          'submittedAt': reportData['createdAt'] != null
+              ? DateTime.parse(reportData['createdAt'])
+              : DateTime.now(),
+          'anonymousId': reportData['anonymousId'],
+        };
+
+        _animationController.forward(from: 0);
+
+        Get.snackbar(
+          'Success',
+          'Report found successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.shade100,
+          colorText: Colors.green.shade900,
+          icon: const Icon(Icons.check_circle, color: Colors.green),
+          margin: const EdgeInsets.all(16),
+          borderRadius: 12,
+          duration: const Duration(seconds: 2),
+        );
+      } else if (result != null && result['error'] == 'not_found') {
+        // Report not found (404)
+        Get.snackbar(
+          'Not Found',
+          result['message'] ?? 'No report found with tracking code: $code',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange.shade100,
+          colorText: Colors.orange.shade900,
+          icon: const Icon(Icons.search_off, color: Colors.orange),
+          margin: const EdgeInsets.all(16),
+          borderRadius: 12,
+          duration: const Duration(seconds: 3),
+        );
+      } else if (result != null && result['error'] == 'network_error') {
+        // Network error
+        Get.snackbar(
+          'Connection Error',
+          result['message'] ?? 'Please check your internet connection',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.shade100,
+          colorText: Colors.red.shade900,
+          icon: const Icon(Icons.wifi_off, color: Colors.red),
+          margin: const EdgeInsets.all(16),
+          borderRadius: 12,
+          duration: const Duration(seconds: 3),
+        );
+      } else {
+        // Generic error
+        Get.snackbar(
+          'Error',
+          result?['message'] ?? 'Failed to search report. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.shade100,
+          colorText: Colors.red.shade900,
+          icon: const Icon(Icons.error_outline, color: Colors.red),
+          margin: const EdgeInsets.all(16),
+          borderRadius: 12,
+        );
+      }
+    } catch (e) {
+      print('Error searching report: $e');
+      foundReport.value = null;
+      Get.snackbar(
+        'Error',
+        'An unexpected error occurred. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade100,
+        colorText: Colors.red.shade900,
+        icon: const Icon(Icons.error_outline, color: Colors.red),
+        margin: const EdgeInsets.all(16),
+        borderRadius: 12,
+      );
+    } finally {
+      isSearching.value = false;
+    }
+  }
+
+  // Map API status to urgency level for UI display
+  String _mapStatusToUrgency(String? status) {
+    // You can customize this mapping based on your needs
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return 'medium';
+      case 'in_progress':
+      case 'under_review':
+        return 'high';
+      case 'resolved':
+        return 'low';
+      case 'rejected':
+        return 'low';
+      default:
+        return 'medium';
+    }
   }
 
   String _formatDateTime(DateTime date) {
@@ -794,9 +904,39 @@ class _TrackReportScreenState extends State<TrackReportScreen>
       'Sep',
       'Oct',
       'Nov',
-      'Dec'
+      'Dec',
     ];
     return '${months[date.month - 1]} ${date.day}, ${date.year} at ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+  }
+
+  void _openChat(Map<String, dynamic> report) {
+    print('DEBUG: Opening chat with report data keys: ${report.keys.toList()}');
+    print(
+      'DEBUG: Report ID values - id: ${report['id']}, _id: ${report['_id']}, reportId: ${report['reportId']}',
+    );
+
+    // Extract the report ID from the report data
+    final reportId = report['id'] ?? report['_id'] ?? report['reportId'];
+
+    if (reportId == null || reportId.toString().isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Unable to open chat. Report ID not found.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade100,
+        colorText: Colors.red.shade900,
+        icon: const Icon(Icons.error_outline, color: Colors.red),
+        margin: const EdgeInsets.all(16),
+        borderRadius: 12,
+      );
+      return;
+    }
+
+    // Navigate to chat screen
+    Get.to(
+      () => ChatWithCounselorScreen(reportId: reportId.toString()),
+      transition: Transition.rightToLeft,
+    );
   }
 
   @override

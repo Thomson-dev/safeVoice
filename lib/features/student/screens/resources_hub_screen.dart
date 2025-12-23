@@ -49,9 +49,9 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Colors.green.shade700,
-                    Colors.green.shade500,
-                    Colors.teal.shade400,
+                    const Color(0xFF4A5AAF),
+                    const Color(0xFF4A5AAF),
+                    const Color(0xFF4A5AAF),
                   ],
                 ),
               ),
@@ -194,10 +194,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                     controller: _tabController,
                     indicator: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [
-                          Colors.green.shade600,
-                          Colors.teal.shade500,
-                        ],
+                        colors: [Colors.green.shade600, Colors.teal.shade500],
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -254,25 +251,22 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
             items: [
               {
                 'icon': Icons.screenshot,
-                'text': 'Take screenshots including date and time stamps'
+                'text': 'Take screenshots including date and time stamps',
               },
               {
                 'icon': Icons.message,
-                'text': 'Save original messages and conversations'
+                'text': 'Save original messages and conversations',
               },
               {
                 'icon': Icons.event,
-                'text': 'Document the incident date and time precisely'
+                'text': 'Document the incident date and time precisely',
               },
               {'icon': Icons.people, 'text': 'Note any witnesses present'},
               {
                 'icon': Icons.save,
-                'text': 'Keep all communications as evidence'
+                'text': 'Keep all communications as evidence',
               },
-              {
-                'icon': Icons.lock,
-                'text': 'Store copies in a secure location'
-              },
+              {'icon': Icons.lock, 'text': 'Store copies in a secure location'},
             ],
           ),
           const SizedBox(height: 16),
@@ -285,24 +279,21 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
             items: [
               {
                 'icon': Icons.privacy_tip,
-                'text': 'Right to confidentiality and anonymity'
+                'text': 'Right to confidentiality and anonymity',
               },
               {
                 'icon': Icons.search,
-                'text': 'Right to fair and prompt investigation'
+                'text': 'Right to fair and prompt investigation',
               },
               {
                 'icon': Icons.support,
-                'text': 'Right to support throughout the process'
+                'text': 'Right to support throughout the process',
               },
               {'icon': Icons.balance, 'text': 'Right to appeal decisions'},
-              {
-                'icon': Icons.shield,
-                'text': 'Protection from retaliation'
-              },
+              {'icon': Icons.shield, 'text': 'Protection from retaliation'},
               {
                 'icon': Icons.medical_services,
-                'text': 'Access to counseling and support services'
+                'text': 'Access to counseling and support services',
               },
             ],
           ),
@@ -329,27 +320,27 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
               {
                 'icon': Icons.location_on,
                 'text': 'Campus Counseling Center - Building A, Room 101',
-                'action': 'Map'
+                'action': 'Map',
               },
               {
                 'icon': Icons.health_and_safety,
                 'text': 'Student Wellness Office',
-                'action': 'Visit'
+                'action': 'Visit',
               },
               {
                 'icon': Icons.groups,
                 'text': 'Peer Support Groups (Weekly Meetings)',
-                'action': 'Join'
+                'action': 'Join',
               },
               {
                 'icon': Icons.psychology,
                 'text': 'Professional Therapists Available',
-                'action': 'Book'
+                'action': 'Book',
               },
               {
                 'icon': Icons.volunteer_activism,
                 'text': 'Free and Confidential Services',
-                'action': 'Info'
+                'action': 'Info',
               },
             ],
           ),
@@ -364,27 +355,27 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
               {
                 'icon': Icons.medical_services,
                 'text': 'Campus Health Center (24/7)',
-                'action': 'Navigate'
+                'action': 'Navigate',
               },
               {
                 'icon': Icons.school,
                 'text': 'Dean of Students Office',
-                'action': 'Navigate'
+                'action': 'Navigate',
               },
               {
                 'icon': Icons.psychology_alt,
                 'text': 'Counseling Center',
-                'action': 'Navigate'
+                'action': 'Navigate',
               },
               {
                 'icon': Icons.home_work,
                 'text': 'Residential Life Offices',
-                'action': 'Navigate'
+                'action': 'Navigate',
               },
               {
                 'icon': Icons.security,
                 'text': 'Security Office (Open 24/7)',
-                'action': 'Navigate'
+                'action': 'Navigate',
               },
             ],
           ),
@@ -419,11 +410,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
             ),
             child: Column(
               children: [
-                const Icon(
-                  Icons.emergency,
-                  color: Colors.white,
-                  size: 48,
-                ),
+                const Icon(Icons.emergency, color: Colors.white, size: 48),
                 const SizedBox(height: 12),
                 const Text(
                   'In Immediate Danger?',
@@ -437,10 +424,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                 const Text(
                   'If you\'re in immediate danger, call emergency services or use our SOS feature',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Colors.white70, fontSize: 14),
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -719,10 +703,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   ),
                 ],
               ),
@@ -735,11 +716,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                     backgroundColor: color,
                     padding: const EdgeInsets.all(12),
                   ),
-                  icon: const Icon(
-                    Icons.phone,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                  icon: const Icon(Icons.phone, color: Colors.white, size: 20),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -761,9 +738,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
   void _showSearchDialog() {
     Get.dialog(
       Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -801,10 +776,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                   ),
                   child: const Text(
                     'Search',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
@@ -831,9 +803,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
   void _callEmergency(String number) {
     Get.dialog(
       Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -845,11 +815,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                   color: Colors.red.shade50,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.phone,
-                  color: Colors.red.shade600,
-                  size: 48,
-                ),
+                child: Icon(Icons.phone, color: Colors.red.shade600, size: 48),
               ),
               const SizedBox(height: 20),
               const Text(
@@ -864,10 +830,7 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
               Text(
                 'This will dial $number',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
+                style: const TextStyle(fontSize: 14, color: Colors.grey),
               ),
               const SizedBox(height: 24),
               Row(
@@ -905,7 +868,10 @@ class _ResourcesHubScreenState extends State<ResourcesHubScreen>
                           snackPosition: SnackPosition.BOTTOM,
                           backgroundColor: Colors.white,
                           colorText: const Color(0xFF2C3E50),
-                          icon: const Icon(Icons.check_circle, color: Colors.green),
+                          icon: const Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                          ),
                           margin: const EdgeInsets.all(16),
                           borderRadius: 12,
                         );

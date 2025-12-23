@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -16,7 +17,7 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
-  
+
   File? _selectedImage;
   String? selectedCategory;
 
@@ -214,10 +215,12 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
                 style: TextStyle(color: Colors.grey.shade400),
               ),
               items: categories
-                  .map((category) => DropdownMenuItem(
-                        value: category,
-                        child: Text(category),
-                      ))
+                  .map(
+                    (category) => DropdownMenuItem(
+                      value: category,
+                      child: Text(category),
+                    ),
+                  )
                   .toList(),
               onChanged: (value) {
                 setState(() => selectedCategory = value);
@@ -369,15 +372,116 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
     }
 
     try {
+      // Show upload progress dialog if image is selected
+      if (_selectedImage != null) {
+        Get.dialog(
+          PopScope(
+            canPop: false,
+            child: Obx(() {
+              final progress = reportController.uploadProgress.value;
+              final percentage = (progress * 100).toInt();
+
+              String statusText;
+              String statusEmoji;
+
+              if (progress < 0.05) {
+                statusText = 'Preparing upload...';
+                statusEmoji = '📋';
+              } else if (progress < 0.5) {
+                statusText = 'Uploading image to cloud...';
+                statusEmoji = '☁️';
+              } else if (progress < 0.8) {
+                statusText = 'Submitting report...';
+                statusEmoji = '📤';
+              } else {
+                statusText = 'Finalizing...';
+                statusEmoji = '✨';
+              }
+
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: CircularProgressIndicator(
+                            value: progress,
+                            backgroundColor: Colors.grey.shade200,
+                            strokeWidth: 6,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              progress < 0.5
+                                  ? const Color(0xFF4C6FFF)
+                                  : const Color(0xFF4CAF50),
+                            ),
+                          ),
+                        ),
+                        Text(statusEmoji, style: const TextStyle(fontSize: 32)),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      statusText,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      '$percentage%',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: progress < 0.5
+                            ? const Color(0xFF4C6FFF)
+                            : const Color(0xFF4CAF50),
+                      ),
+                    ),
+                    if (progress < 0.5) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        'Please wait while we upload your evidence',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              );
+            }),
+          ),
+          barrierDismissible: false,
+        );
+      }
+
       final trackingCode = await reportController.submitReport(
         incidentType: selectedCategory!,
         description: '${titleController.text}\n\n${descriptionController.text}',
+        evidencePaths: _selectedImage != null ? [_selectedImage!.path] : null,
       );
+
+      // Close progress dialog if it was shown
+      if (_selectedImage != null) {
+        Get.back();
+      }
 
       // Show success dialog
       Get.dialog(
         AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           title: const Text(
             'Report Submitted',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -412,19 +516,57 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF4C6FFF).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  trackingCode,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                    color: Color(0xFF4C6FFF),
+              GestureDetector(
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: trackingCode));
+                  Get.snackbar(
+                    'Copied',
+                    'Tracking code copied to clipboard',
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.black87,
+                    colorText: Colors.white,
+                    margin: const EdgeInsets.all(16),
+                    borderRadius: 12,
+                    duration: const Duration(seconds: 2),
+                    icon: const Icon(Icons.check_circle, color: Colors.green),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF4C6FFF).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: const Color(0xFF4C6FFF).withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            trackingCode,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2,
+                              color: Color(0xFF4C6FFF),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      const Icon(
+                        Icons.copy_rounded,
+                        color: Color(0xFF4C6FFF),
+                        size: 22,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -432,10 +574,7 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
               Text(
                 'Save this code to check your case status anytime.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
               ),
             ],
           ),
@@ -447,10 +586,7 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
               },
               child: const Text(
                 'Done',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
           ],

@@ -15,18 +15,45 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final fullNameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final licenseController = TextEditingController();
+  final schoolNameController = TextEditingController();
+  final departmentController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize AuthController but don't check auth status yet
+    Get.put(AuthController());
+
+    // Manually trigger auth check AFTER the first frame is rendered
+    // This ensures the overlay is ready before any snackbars are shown
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
+        final authController = Get.find<AuthController>();
+        authController.checkAuthStatus();
+      } catch (e) {
+        print('RoleSelectionScreen: Error checking auth status - $e');
+      }
+    });
+  }
 
   @override
   void dispose() {
-   
     emailController.dispose();
     passwordController.dispose();
+    fullNameController.dispose();
+    phoneController.dispose();
+    licenseController.dispose();
+    schoolNameController.dispose();
+    departmentController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final authController = Get.put(AuthController());
+    final authController = Get.find<AuthController>();
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
@@ -37,6 +64,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
+
               const Text(
                 'Get started for free',
                 style: TextStyle(
@@ -48,10 +76,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               const SizedBox(height: 8),
               const Text(
                 'Free forever. No credit card needed.',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
               const SizedBox(height: 32),
 
@@ -88,9 +113,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 ],
               ),
               const SizedBox(height: 32),
-
-          
-       
 
               // Email Field
               const Text(
@@ -152,7 +174,163 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 20),
+
+              // Counselor-specific fields
+              if (selectedRole == 'counselor') ...[
+                // Full Name Field
+                const Text(
+                  'FULL NAME *',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: fullNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Dr. Sarah Johnson',
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Phone Number Field
+                const Text(
+                  'PHONE NUMBER *',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    hintText: '+1 234 567 8900',
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // License Number Field
+                const Text(
+                  'LICENSE NUMBER *',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: licenseController,
+                  decoration: InputDecoration(
+                    hintText: 'LIC-12345',
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // School Name Field (Optional)
+                const Text(
+                  'SCHOOL/INSTITUTION NAME (Optional)',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: schoolNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Lincoln High School',
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Department Field (Optional)
+                const Text(
+                  'DEPARTMENT (Optional)',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: departmentController,
+                  decoration: InputDecoration(
+                    hintText: 'Mental Health',
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+
+              const SizedBox(height: 12),
 
               // Create Account Button
               SizedBox(
@@ -163,22 +341,37 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                       // Register student with anonymous authentication
                       await authController.registerStudent(
                         password: passwordController.text,
-                        email: emailController.text.isNotEmpty ? emailController.text : null,
+                        email: emailController.text.isNotEmpty
+                            ? emailController.text
+                            : null,
                       );
                     } else {
                       // Register counselor with full details
-                      if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                      if (emailController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty &&
+                          fullNameController.text.isNotEmpty &&
+                          licenseController.text.isNotEmpty &&
+                          phoneController.text.isNotEmpty) {
                         await authController.registerCounselor(
                           email: emailController.text,
                           password: passwordController.text,
-                          fullName: emailController.text, // Update when you add fullName field
-                          licenseNumber: 'LIC-DEFAULT', // Update when you add license field
+                          fullName: fullNameController.text,
+                          phone: phoneController.text,
+                          licenseNumber: licenseController.text,
+                          schoolName: schoolNameController.text.isNotEmpty
+                              ? schoolNameController.text
+                              : null,
+                          department: departmentController.text.isNotEmpty
+                              ? departmentController.text
+                              : null,
                         );
                       } else {
                         Get.snackbar(
                           'Error',
-                          'Please fill in all required fields',
+                          'Please fill in all required fields (Email, Password, Full Name, Phone, License)',
                           snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
                         );
                       }
                     }
@@ -210,19 +403,10 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   children: [
                     const Text(
                       'Already have an account? ',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Get.snackbar(
-                          'Sign In',
-                          'Sign in functionality coming soon',
-                          snackPosition: SnackPosition.BOTTOM,
-                        );
-                      },
+                      onTap: () => Get.toNamed(AppRoutes.SIGN_IN),
                       child: const Text(
                         'Sign in',
                         style: TextStyle(
@@ -273,11 +457,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                     color: Color(0xFF4C6FFF),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.check,
-                    color: Colors.white,
-                    size: 16,
-                  ),
+                  child: const Icon(Icons.check, color: Colors.white, size: 16),
                 ),
               ),
             Column(
@@ -293,7 +473,9 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   child: Icon(
                     icon,
                     size: 32,
-                    color: isSelected ? const Color(0xFF4C6FFF) : Colors.grey.shade600,
+                    color: isSelected
+                        ? const Color(0xFF4C6FFF)
+                        : Colors.grey.shade600,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -302,7 +484,9 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: isSelected ? const Color(0xFF2C3E50) : Colors.grey.shade700,
+                    color: isSelected
+                        ? const Color(0xFF2C3E50)
+                        : Colors.grey.shade700,
                   ),
                 ),
                 const SizedBox(height: 4),
